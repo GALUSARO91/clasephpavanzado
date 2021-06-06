@@ -114,6 +114,16 @@ $map->get('admin', '/personal/admin', [
     'App\Controllers\AdminController',
     'getIndex'
 ]);
+$map->get('conntactForm', '/personal/contact', [
+    'App\Controllers\ContactController',
+    'getIndex'
+]);
+
+$map->post('conntactSend', '/personal/contact/send', [
+    'App\Controllers\ContactController',
+    'sendMessage'
+]);
+
 
 $matcher = $routerContainer->getMatcher();
 $route = $matcher->match($request);
@@ -136,6 +146,7 @@ $harmony
    $emitter = new SapiEmitter();
    $emitter->emit(new Response\EmptyResponse(400));
 } catch(\Error $e){
+    $log->error($e->getMessage());
     $emitter = new SapiEmitter();
     $emitter->emit(new Response\EmptyResponse(500));
 }
