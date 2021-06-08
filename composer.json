@@ -21,6 +21,7 @@
         "franzl/whoops-middleware": "^2.0",
         "monolog/monolog": "^2.2",
         "robmorgan/phinx": "^0.12.7",
-        "symfony/console": "^5.3"
+        "symfony/console": "^5.3",
+        "swiftmailer/swiftmailer": "^6.2"
     }
 }
