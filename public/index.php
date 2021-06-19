@@ -128,7 +128,7 @@ $map->post('conntactSend', '/personal/contact/send', [
 $matcher = $routerContainer->getMatcher();
 $route = $matcher->match($request);
 
-try {
+// try {
     $harmony = new Harmony(ServerRequestFactory::fromGlobals(), new Response());
 $harmony
     ->addMiddleware(new LaminasEmitterMiddleware(new SapiEmitter()));
@@ -141,7 +141,7 @@ $harmony
     ->addMiddleware(new AuthenticationMiddleware())
     ->addMiddleware(new DispatcherMiddleware($container, 'request-handler'))
     ->run();
-} catch (\Exception $e) {
+/* } catch (\Exception $e) {
    $log->warning($e->getMessage());
    $emitter = new SapiEmitter();
    $emitter->emit(new Response\EmptyResponse(400));
@@ -149,5 +149,5 @@ $harmony
     $log->error($e->getMessage());
     $emitter = new SapiEmitter();
     $emitter->emit(new Response\EmptyResponse(500));
-}
+} */
 
