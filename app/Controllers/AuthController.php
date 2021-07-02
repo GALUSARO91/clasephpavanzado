@@ -36,4 +36,37 @@ class AuthController extends BaseController {
         unset($_SESSION['userId']);
         return new RedirectResponse('/personal/login');
     }
+
+    public function getChangePass() {
+        return $this->renderHTML('changePass.twig');
+    }
+
+    public function updatePass(ServerRequest $request){
+        $postData = $request->getParsedBody();
+        $responseMessage = null;
+        $user = User::where('email', $postData['email'])->first();
+        if($user){
+            if($postData['password']===$postData['confirmPassword']){
+                $user->update(['password' => password_hash($postData['password'], PASSWORD_DEFAULT)]);  
+                $responseMessage = 'Password updated';
+                return new RedirectResponse('/personal/login');
+
+            } else{
+                $responseMessage = 'Password & confirm password not match';
+                return $this->renderHTML('changePass.twig', [
+                    'responseMessage' => $responseMessage
+                ]);
+    
+            }
+
+        } else {
+            $responseMessage = 'Password change unsuccessful';
+            return $this->renderHTML('changePass.twig', [
+                'responseMessage' => $responseMessage
+            ]);
+
+        }
+        
+
+    }
 }

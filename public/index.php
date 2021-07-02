@@ -102,6 +102,15 @@ $map->get('loginForm', '/personal/login', [
     'App\Controllers\AuthController',
     'getLogin'
 ]);
+$map->get('changePass', '/personal/changepass', [
+    'App\Controllers\AuthController',
+    'getChangePass'
+]);
+
+$map->post('updatePass', '/personal/changepass', [
+    'App\Controllers\AuthController',
+    'updatePass'
+]);
 $map->get('logout', '/personal/logout', [
     'App\Controllers\AuthController',
     'getLogout'
@@ -128,10 +137,11 @@ $map->post('conntactSend', '/personal/contact/send', [
 $matcher = $routerContainer->getMatcher();
 $route = $matcher->match($request);
 
-// try {
+try {
     $harmony = new Harmony(ServerRequestFactory::fromGlobals(), new Response());
 $harmony
-    ->addMiddleware(new LaminasEmitterMiddleware(new SapiEmitter()));
+//LaminasEmitterMiddleware
+    ->addMiddleware(new HttpHandlerRunnerMiddleware(new SapiEmitter()));
     if($_ENV['DEBUG'] === 'true'){
         $harmony->addMiddleware(new \Franzl\Middleware\Whoops\WhoopsMiddleware);
     }
@@ -141,7 +151,7 @@ $harmony
     ->addMiddleware(new AuthenticationMiddleware())
     ->addMiddleware(new DispatcherMiddleware($container, 'request-handler'))
     ->run();
-/* } catch (\Exception $e) {
+ } catch (\Exception $e) {
    $log->warning($e->getMessage());
    $emitter = new SapiEmitter();
    $emitter->emit(new Response\EmptyResponse(400));
@@ -149,5 +159,5 @@ $harmony
     $log->error($e->getMessage());
     $emitter = new SapiEmitter();
     $emitter->emit(new Response\EmptyResponse(500));
-} */
+} 
 

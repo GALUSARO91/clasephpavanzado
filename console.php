@@ -9,7 +9,9 @@ $dotenv->load();
 
 
 use App\Commands\SendMailCommand;
+use App\Commands\CreateUserCommand;
 use App\Commands\HelloWorldCommand;
+use App\Commands\UpdateUserPassCommand;
 use Symfony\Component\Console\Application;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
@@ -32,5 +34,7 @@ $application = new Application();
 // ... register commands
 $application->add(new HelloWorldCommand());
 $application->add(new SendMailCommand());
+$application->add(new CreateUserCommand());
+$application->add(new UpdateUserPassCommand());
 
 $application->run();
